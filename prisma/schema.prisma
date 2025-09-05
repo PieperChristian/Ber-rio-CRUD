@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+// model Loja_Notebook {
+//   id          Int         @id @default(autoincrement())
+//   modelo      String      @db.VarChar(100)
+//   tam_tela    Decimal     @default(0) @db.Decimal(3, 1)
+//   marca       String      @db.VarChar(100)
+//   processador Processador
+//   memoria     Int         @default(0)
+//   preco       Decimal     @db.Decimal(10, 2)
+//   qtd_estoque Int
+
+//   @@map("notebooks") // nome da tabela no banco
+// }
+
+// enum Processador {
+//   Intel
+//   AMD
+// }
