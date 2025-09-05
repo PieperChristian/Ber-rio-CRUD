@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  // output   = "../generated/prisma"
 }
 
 datasource db {
@@ -8,22 +7,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Mae {
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(100)
+  endereco String @db.VarChar(200)
+  telefone String @db.Char(11)
+  dataNasc DateTime @db.Date
+  recem_Nascidos Recem_Nascido[]
+
+  @@map("Mae")
+}
+
+model Medico {
+  id Int @id @default(autoincrement())
+  crm String @db.VarChar(8)
+  nome String @db.VarChar(100)
+  telefone String @db.Char(11)
+  especialidade Especialidade
+  recem_Nascidos Recem_Nascido[]
+
+  @@map("Medicos")
+}
 
 
-// model Loja_Notebook {
-//   id          Int         @id @default(autoincrement())
-//   modelo      String      @db.VarChar(100)
-//   tam_tela    Decimal     @default(0) @db.Decimal(3, 1)
-//   marca       String      @db.VarChar(100)
-//   processador Processador
-//   memoria     Int         @default(0)
-//   preco       Decimal     @db.Decimal(10, 2)
-//   qtd_estoque Int
+model Recem_Nascido {
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(100)
+  dataNasc DateTime @db.DateTime()
+  peso Decimal @db.Decimal(7, 2)
+  parto Parto @default(Normal)
+  altura Decimal @db.Decimal(5, 2)
+  maeID Int
+  mae Mae @relation(fields: [maeID], references: [id])
+  medicoID Int
+  medico Medico @relation(fields: [medicoID], references: [id])
 
-//   @@map("notebooks") // nome da tabela no banco
-// }
+  @@map("RecemNascidos")
+}
 
-// enum Processador {
-//   Intel
-//   AMD
-// }
+enum Especialidade {
+  Ginecologista
+  Cirugião_Geral
+  Obstetra
+}
+
+enum Parto {
+  Normal
+  Cesária
+}
