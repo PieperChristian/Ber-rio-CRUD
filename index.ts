@@ -5,7 +5,7 @@ const port = 3000
 import bercarioRoutes from './routes/bercario.js'
 import maesRoutes from './routes/maes.js'
 import medicosRoutes from './routes/medicos.js'
-import recemNascidosRoutes from './routes/recemNascidos'
+import recemNascidosRoutes from './routes/recemNascidos.js'
 
 app.use(express.json()) // serve para identificar que os dados estao no formato JSON
 
