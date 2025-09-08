@@ -11,12 +11,14 @@ import { Parto } from "@prisma/client"
 import { Sexo } from "@prisma/client"
 
 const rnValidatocao = z.object({
-    nome_: z.string().min(10, "Nome deve ter no mínimo 10 caracteres"),
-    dataNasc_: z.string().datetime("Data deve ser no formato aaaa-mm-ddT00:00:00Z"),
-    peso_: z.number().min(1000, "Peso deve ser no mínimo 1000g").max(10000, "Peso deve ser no máximo 10000g"),
-    parto_: z.nativeEnum(Parto),
-    altura_: z.number().min(10, "Altura deve ser no mínimo 10cm").max(100, "Altura deve ser no máximo 100cm"),
-    sexo_: z.nativeEnum(Sexo)
+    nome: z.string().min(10, "Nome deve ter no mínimo 10 caracteres"),
+    dataNasc: z.string().datetime("Data deve ser no formato aaaa-mm-ddT00:00:00Z"),
+    peso: z.number().int().min(1000, "Peso deve ser no mínimo 1000g").max(10000, "Peso deve ser no máximo 10000g"),
+    parto: z.nativeEnum(Parto),
+    altura: z.number().int().min(10, "Altura deve ser no mínimo 10cm").max(100, "Altura deve ser no máximo 100cm"),
+    sexo: z.nativeEnum(Sexo),
+    maeID: z.number().int().positive(),
+    medicoID: z.number().int().positive()
 })
 
 router.get("/", async (req, res) => {
@@ -24,9 +26,9 @@ router.get("/", async (req, res) => {
         const recemNascidos = await prisma.recem_Nascido.findMany({
             orderBy: { id: 'desc' }
         })
-        res.status(200).json()
+        res.status(200).json({message: "Recem nascidos encontrados com sucesso", recemNascidos})
     } catch (error) {
-        res.status(500).json({ error: error })
+        res.status(500).json({ error: (error as Error).message })
     }
 })
 
@@ -39,19 +41,19 @@ router.post("/", async (req, res) => {
     try {
         const novoRecemNascido = await prisma.recem_Nascido.create({
             data: {
-                nome: recemNascido.data.nome_,
-                dataNasc: recemNascido.data.dataNasc_,
-                peso: recemNascido.data.peso_,
-                parto: recemNascido.data.parto_,
-                altura: recemNascido.data.altura_,
-                sexo: recemNascido.data.sexo_,
-                mae: req.body.mae,
-                medico: req.body.medico
+                nome: recemNascido.data.nome,
+                dataNasc: recemNascido.data.dataNasc,
+                peso: recemNascido.data.peso,
+                parto: recemNascido.data.parto,
+                altura: recemNascido.data.altura,
+                sexo: recemNascido.data.sexo,
+                maeID: recemNascido.data.maeID,
+                medicoID: recemNascido.data.medicoID
             }
         })
-        res.status(200).json({ message: "Recem nascido cadastrado com sucesso", novoRecemNascido })
+        res.status(201).json({ message: "Recem nascido cadastrado com sucesso", novoRecemNascido })
     } catch (error) {
-        res.status(500).json({ error: error })
+        res.status(500).json({ error: (error as Error).message })
     }
 })
 
@@ -70,19 +72,19 @@ router.put("/:id", async (req, res) => {
         const atualizaRecemNascido = await prisma.recem_Nascido.update({
             where: { id: Number(id)},
             data: {
-                nome: recemNascido.data.nome_,
-                dataNasc: recemNascido.data.dataNasc_,
-                peso: recemNascido.data.peso_,
-                parto: recemNascido.data.parto_,
-                altura: recemNascido.data.altura_,
-                sexo: recemNascido.data.sexo_,
-                mae: req.body.mae,
-                medico: req.body.medico
+                nome: recemNascido.data.nome,
+                dataNasc: recemNascido.data.dataNasc,
+                peso: recemNascido.data.peso,
+                parto: recemNascido.data.parto,
+                altura: recemNascido.data.altura,
+                sexo: recemNascido.data.sexo,
+                maeID: recemNascido.data.maeID,
+                medicoID: recemNascido.data.medicoID
             }
         })
         res.status(200).json({message: "Recem nascido atualizado com sucesso", atualizaRecemNascido})
     } catch (error) {
-        res.status(500).json({ error: error })
+        res.status(500).json({ error: (error as Error).message })
     }
 })
 
@@ -98,7 +100,7 @@ router.delete("/:id", async (req, res) => {
         })
         res.status(200).json({message: "Recem nascido deletado com sucesso", deletaRecemNascido})
     } catch (error) {
-        res.status(500).json({ error: error })
+        res.status(500).json({ error: (error as Error).message })
     }
 })
 
