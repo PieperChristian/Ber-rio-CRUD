@@ -32,7 +32,6 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     const recemNascido = rnValidatocao.safeParse(req.body)
-
     if (!recemNascido.success) {
         return res.status(400).json(recemNascido.error.format())
     }
@@ -58,13 +57,11 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
     const { id } = req.params
-
     if (Number.isNaN(Number(id))) {
-        return res.status(400).json({ error: "Código Inváido."})
+        return res.status(400).json({ error: "Código Inválido."})
     }
 
     const recemNascido = rnValidatocao.safeParse(req.body)
-
     if (!recemNascido.success) {
         return res.status(400).json(recemNascido.error.format())
     }
@@ -83,16 +80,23 @@ router.put("/:id", async (req, res) => {
                 medico: req.body.medico
             }
         })
-        res.status(200).json()
+        res.status(200).json({message: "Recem nascido atualizado com sucesso", atualizaRecemNascido})
     } catch (error) {
         res.status(500).json({ error: error })
     }
 })
 
 router.delete("/:id", async (req, res) => {
+    const { id } = req.params
+    if (Number.isNaN(Number(id))) {
+        return res.status(400).json({ error: "Código Inválido."})
+    }
+
     try {
-        
-        res.status(200).json()
+        const deletaRecemNascido = await prisma.recem_Nascido.delete({
+            where: { id: Number(id) }
+        })
+        res.status(200).json({message: "Recem nascido deletado com sucesso", deletaRecemNascido})
     } catch (error) {
         res.status(500).json({ error: error })
     }
