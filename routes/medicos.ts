@@ -31,8 +31,15 @@ router.post("/", async (req, res) => {
         return res.status(400).json(medico.error.format())
     }
     try {
-        
-        res.status(200).json()
+        const novoMedico = await prisma.medico.create({
+            data: {
+                crm: medico.data.crm,
+                nome: medico.data.nome,
+                telefone: medico.data.telefone,
+                especialidade: medico.data.especialidade
+            }
+        })
+        res.status(200).json({message: "Medico cadastrado com sucesso", novoMedico})
     } catch (error) {
         res.status(500).json({ error: error })
     }
