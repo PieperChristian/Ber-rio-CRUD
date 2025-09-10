@@ -74,9 +74,15 @@ router.put("/:id", async (req, res) => {
 })
 
 router.delete("/:id", async (req, res) => {
+    const { id } = req.params
+    if (Number.isNaN(Number(id))) {
+        return res.status(400).json({ error: "Código Inválido."})
+    }
     try {
-        
-        res.status(200).json()
+        const deletaMae = await prisma.mae.delete({
+            where: { id: Number(id) }
+        })
+        res.status(200).json({message: "Mae deletada com sucesso", deletaMae})
     } catch (error) {
         res.status(500).json({ error: error })
     }
