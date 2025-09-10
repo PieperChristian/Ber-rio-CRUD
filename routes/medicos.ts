@@ -48,9 +48,27 @@ router.post("/", async (req, res) => {
 })
 
 router.put("/:id", async (req, res) => {
+    const { id } = req.body
+    if (Number.isNaN(Number(id))) {
+        return res.status(400).json({ error: "Código Inválido."})
+    }
+
+    const medico = medicoValidacao.safeParse(req.body)
+    if (!medico.success) {
+        return res.status(400).json(medico.error.format())        
+    }
+
     try {
-        
-        res.status(200).json()
+        const atualizaMedico = await prisma.medico.update({
+            where: { id: Number(id)},
+            data: {
+                crm: medico.data.crm,
+                nome: medico.data.nome,
+                telefone: medico.data.telefone,
+                especialidade: medico.data.especialidade
+            }
+        })
+        res.status(200).json({message: "Medico atualizado com sucesso", atualizaMedico})
     } catch (error) {
         res.status(500).json({ error: error })
     }
