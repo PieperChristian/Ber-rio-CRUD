@@ -16,8 +16,10 @@ const maeValidacao = z.object({
 
 router.get("/", async (req, res) => {
     try {
-        
-        res.status(200).json()
+        const maes = await prisma.recem_Nascido.findMany({
+            orderBy: { id: 'desc' }
+        })
+        res.status(200).json({message: "Maes encontradas com sucesso", maes})
     } catch (error) {
         res.status(500).json({ error: error })
     }
