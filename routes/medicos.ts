@@ -18,8 +18,10 @@ const medicoValidacao = z.object({
 
 router.get("/", async (req, res) => {
     try {
-        
-        res.status(200).json()
+        const medicos = await prisma.medico.findMany({
+            orderBy: { id: 'desc' }
+        })
+        res.status(200).json({message: "Medicos encontrados com sucesso", medicos})
     } catch (error) {
         res.status(500).json({ error: error })
     }
