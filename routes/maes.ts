@@ -28,7 +28,7 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
     const mae = maeValidacao.safeParse(req.body)
     if (!mae.success) {
-        return res.status(400).json
+        return res.status(400).json({message: mae.error.format()})
     }
 
     try {
