@@ -37,6 +37,7 @@ model Recem_Nascido {
   peso Decimal @db.Decimal(7, 2)
   parto Parto @default(Normal)
   altura Decimal @db.Decimal(5, 2)
+  sexo Sexo
   maeID Int
   mae Mae @relation(fields: [maeID], references: [id])
   medicoID Int
@@ -54,4 +55,9 @@ enum Especialidade {
 enum Parto {
   Normal
   Cesária
+}
+
+enum Sexo {
+  M
+  F
 }
