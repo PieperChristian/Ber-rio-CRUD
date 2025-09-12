@@ -1,0 +1,56 @@
+[
+    {
+        "crm": "12345678",
+        "nome": "Dr. João Cardoso",
+        "telefone": "11999990001",
+        "especialidade": "Obstetra"
+    },
+    {
+        "crm": "22345678",
+        "nome": "Dra. Maria Santos",
+        "telefone": "11999990002",
+        "especialidade": "Ginecologista"
+    },
+    {
+        "crm": "32345678",
+        "nome": "Dr. Pedro Almeida",
+        "telefone": "21999990003",
+        "especialidade": "Cirugião_Geral"
+    },
+    {
+        "crm": "42345678",
+        "nome": "Dra. Ana Lima",
+        "telefone": "31999990004",
+        "especialidade": "Obstetra"
+    },
+    {
+        "crm": "52345678",
+        "nome": "Dr. Carlos Souza",
+        "telefone": "41999990005",
+        "especialidade": "Ginecologista"
+    },
+    {
+        "crm": "62345678",
+        "nome": "Dra. Paula Teixeira",
+        "telefone": "51999990006",
+        "especialidade": "Cirugião_Geral"
+    },
+    {
+        "crm": "72345678",
+        "nome": "Dr. Ricardo Mendes",
+        "telefone": "61999990007",
+        "especialidade": "Obstetra"
+    },
+    {
+        "crm": "82345678",
+        "nome": "Dra. Juliana Costa",
+        "telefone": "71999990008",
+        "especialidade": "Ginecologista"
+    },
+    {
+        "crm": "92345678",
+        "nome": "Dr. Felipe Nogueira",
+        "telefone": "11999990009",
+        "especialidade": "Obstetra"
+    }
+]
